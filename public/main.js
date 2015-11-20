@@ -6,7 +6,7 @@ $(function() {
   }
 
   function insertItems(items) {
-    items.forEach(function (item) {
+    items.forEach(function(item) {
       insertItem(item);
     });
   }
@@ -30,15 +30,15 @@ $(function() {
     insertItems(data);
   });
 
-  $('#keywords').on('keyup', function () {
+  $('#keywords').on('keyup', function() {
     var that = this;
     $('.main-info').empty();
     if (this.value === '') {
       insertItems(bookmarks);
       return;
     }
-    bookmarks.forEach(function (item) {
-      var condition = eval('/' + that.value +'/ig');
+    bookmarks.forEach(function(item) {
+      var condition = eval('/' + that.value + '/ig');
       if (condition.test(item.title)) {
 
         var span = '<span class="highlightingText">' + '$&' + '</span>';
