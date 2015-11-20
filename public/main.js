@@ -1,12 +1,53 @@
-$(function () {
-  $.ajax({
-  url: "bookmarks.json",
-}).done(function(data) {
-  function getdata(nS) {
-    return new Date(parseInt(nS)*1000).toLocaleString(/:\d{1,2}$/,'');
+$(function() {
+  function formatDate(timestamp) {
+    var result = 'Created @ ';
+    var date = new Date(parseInt(timestamp) * 1000);
+    return result + date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
   }
-    data.forEach(function (item) {
-      console.log(getdata(item.created));
+
+  function insertItems(items) {
+    items.forEach(function (item) {
+      insertItem(item);
+    });
+  }
+
+  function insertItem(item) {
+    var infoBox = '<div class="info-box"></div>';
+    var info = '<div class="info">' + item.title + '</div>';
+    var timestamp = '<div class="timestamp">' + formatDate(item.created) + '</div>';
+
+    $infoBox = $(infoBox);
+    $infoBox.append(info + timestamp);
+    $('.main-info').append($infoBox);
+  }
+
+  var bookmarks;
+
+  $.ajax({
+    url: "bookmarks.json",
+  }).done(function(data) {
+    bookmarks = data;
+    insertItems(data);
+  });
+
+  $('#keywords').on('keyup', function () {
+    var that = this;
+    $('.main-info').empty();
+    if (this.value === '') {
+      insertItems(bookmarks);
+      return;
+    }
+    bookmarks.forEach(function (item) {
+      var condition = eval('/' + that.value +'/ig');
+      if (condition.test(item.title)) {
+
+        var span = '<span class="highlightingText">' + '$&' + '</span>';
+        var result = {};
+
+        result.title = item.title.replace(condition, span);
+        result.created = item.created;
+        insertItem(result);
+      }
     });
   });
 });
