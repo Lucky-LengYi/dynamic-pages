@@ -30,7 +30,7 @@ $(function() {
     insertItems(data);
   });
 
-  $('#keywords').on('keyup', function() {
+  $('#keywords').on('input propertychange', function() {
     var that = this;
     $('.main-info').empty();
     if (this.value === '') {
