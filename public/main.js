@@ -38,7 +38,8 @@ $(function() {
       return;
     }
     bookmarks.forEach(function(item) {
-      var condition = eval('/' + that.value + '/ig');
+
+      var condition = new RegExp(that.value, 'ig');
       if (condition.test(item.title)) {
 
         var span = '<span class="highlightingText">' + '$&' + '</span>';
