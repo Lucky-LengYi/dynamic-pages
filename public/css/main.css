@@ -9,6 +9,10 @@ body {
   height: 70px;
   border-bottom: dashed 1px #CCCCCC;
   position: relative;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  overflow: hidden;
 }
 .info {
   float: left;
